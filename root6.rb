@@ -23,6 +23,9 @@ class Root6 < Formula
   conflicts_with "root"
 
   needs :cxx11
+  
+  option "with-minuit2", "Compile with Minuit2 support"
+  option "with-roofit",  "Compile with RooFit"
 
   def cmake_opt(opt, pkg = opt)
     "-D#{opt}=#{(build.with? pkg) ? "ON" : "OFF"}"
@@ -50,6 +53,8 @@ class Root6 < Formula
         cmake_opt("python"),
         cmake_opt("ssl", "openssl"),
         cmake_opt("xrootd"),
+        cmake_opt("roofit"),
+        cmake_opt("minuit2"),
         *std_cmake_args
       system "make", "install"
     end
