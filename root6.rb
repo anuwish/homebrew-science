@@ -24,9 +24,6 @@ class Root6 < Formula
 
   needs :cxx11
   
-  option "with-minuit2", "Compile with Minuit2 support"
-  option "with-roofit",  "Compile with RooFit"
-
   def cmake_opt(opt, pkg = opt)
     "-D#{opt}=#{(build.with? pkg) ? "ON" : "OFF"}"
   end
@@ -49,12 +46,12 @@ class Root6 < Formula
       /include_directories\(/, "\\0${CMAKE_SOURCE_DIR}/proof/proofd/inc "
 
     mkdir "cmake-build" do
-      system "cmake", "..", "-Dgnuinstall=ON", "-Dbuiltin_freetype=ON",
+      system "cmake", "..", "-Dgnuinstall=ON", "-Dbuiltin_freetype=ON", 
+        "-Droofit=ON",  # build with RooFit  
+        "-Dminuit2=ON", # build with Minuit2 
         cmake_opt("python"),
         cmake_opt("ssl", "openssl"),
         cmake_opt("xrootd"),
-        cmake_opt("roofit"),
-        cmake_opt("minuit2"),
         *std_cmake_args
       system "make", "install"
     end
